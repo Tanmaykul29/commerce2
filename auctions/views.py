@@ -188,29 +188,6 @@ def comment(request, id):
         })
 
 
-# @login_required()
-# def add_watchlist(request, id):
-#     is_added = False
-#     if request.method == "POST":
-#         focused_product = Auction.objects.get(id=id)
-#         watchlist = Watchlist()
-#         if focused_product.id == watchlist.prod_id:
-#             is_added = True
-#             return render(request, "auctions/focus.html", {
-#                 "is_added": is_added,
-#                 "message": "Already in watchlist."
-#             })
-#         else:
-#             watchlist.user = request.user.username
-#             watchlist.prod_id = focused_product.id
-#             watchlist.save()
-#         return HttpResponseRedirect(reverse('index'))
-#     else:
-#         return render(request, "auctions/focus.html", {
-#             "message": "Added in watchlist.",
-#             "is_added": is_added
-#         })
-
 @login_required()
 def add_watchlist(request, id):
     focused_product = Auction.objects.get(id=id)
@@ -244,17 +221,7 @@ def add_watchlist(request, id):
         })
 
 
-# def watchlist(request):
-#     if request.method == "GET":
-#         items = Watchlist.objects.filter(user=request.user.username)
-#         auctions = Auction.objects.all()
-#         context = {
-#             'items':items,
-#             'auctions':auctions,
-#         }
-#         return render(request, "auctions/watchlist.html", context)
-
-
+@login_required()
 def watchlist(request):
     if request.method == "GET":
         items = Watchlist.objects.filter(user=request.user.username)
