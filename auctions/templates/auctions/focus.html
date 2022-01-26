@@ -1,0 +1,164 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Product</h2>
+
+<!--    <a href="{% url 'index' %}"><button class="button" style="-->
+<!--                            padding: 15px 25px;-->
+<!--                            font-size: 14px;-->
+<!--                            text-align: center;-->
+<!--                            cursor: pointer;-->
+<!--                            outline: none;-->
+<!--                            color: #fff;-->
+<!--                            background-color: #2596be;-->
+<!--                            border: none;-->
+<!--                            border-radius: 15px;">Home</button></a>-->
+    <h2>{{focused_product.title.capitalize}}</h2>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-6" style="background-color:#4FBDBA;;"><img src="{{focused_product.img_url}}" style="width=300px;height:300px"></div>
+            <div class="col-sm-6" style="background-color:#AEFEFF;">
+                <p>{{focused_product.description}}</p>
+                <p>{{focused_product.category}}</p>
+                <p>{{focused_product.price}}</p>
+                <p>{{focused_product.date}}</p>
+            </div>
+          </div>
+        </div>
+<br>
+        {% if message %}
+            <div class="alert alert-{{msg_type}}">{{ message }}</div>
+        {% endif %}
+        {% if added %}
+            <form action="{% url 'add_watchlist' focused_product.id %}" method="POST">
+                {% csrf_token %}
+                <button class="button" style="
+                            padding: 15px 25px;
+                            font-size: 14px;
+                            text-align: center;
+                            cursor: pointer;
+                            outline: none;
+                            color: #fff;
+                            background-color: #2596be;
+                            border: none;
+                            border-radius: 15px;">Remove to Watchlist</button>
+            </form>
+<!--        <a href="{% url 'add_watchlist' focused_product.id %}"><button class="button" style="-->
+<!--                    padding: 15px 25px;-->
+<!--                    font-size: 14px;-->
+<!--                    text-align: center;-->
+<!--                    cursor: pointer;-->
+<!--                    outline: none;-->
+<!--                    color: #fff;-->
+<!--                    background-color: #2596be;-->
+<!--                    border: none;-->
+<!--                    border-radius: 15px;">-->
+<!--                Add to Watchlist</button>-->
+<!--        </a>-->
+        {% else %}
+            <form action="{% url 'add_watchlist' focused_product.id %}" method="POST">
+                {% csrf_token %}
+                <button class="button" style="
+                            padding: 15px 25px;
+                            font-size: 14px;
+                            text-align: center;
+                            cursor: pointer;
+                            outline: none;
+                            color: #fff;
+                            background-color: #2596be;
+                            border: none;
+                            border-radius: 15px;">Added to Watchlist</button>
+            </form>
+<!--        <a href="{% url 'add_watchlist' focused_product.id %}"><button class="button" style="-->
+<!--                    padding: 15px 25px;-->
+<!--                    font-size: 14px;-->
+<!--                    text-align: center;-->
+<!--                    cursor: pointer;-->
+<!--                    outline: none;-->
+<!--                    color: #fff;-->
+<!--                    background-color: #2596be;-->
+<!--                    border: none;-->
+<!--                    border-radius: 15px;">-->
+<!--                Remove from Watchlist</button>-->
+<!--        </a>-->
+        {% endif %}
+
+
+<br>
+<br>
+
+    <form action="{% url 'bid' focused_product.id %}" method="POST">
+        {% csrf_token %}
+        <input style="height:50px" type="number" placeholder="Bid" name="new_bid">
+        <button class="button" style="
+                    padding: 15px 25px;
+                    font-size: 14px;
+                    text-align: center;
+                    cursor: pointer;
+                    outline: none;
+                    color: #fff;
+                    background-color: #2596be;
+                    border: none;
+                    border-radius: 15px;">
+                Bid</button>
+    </form>
+<br>
+
+<br>
+    <form action="{% url 'comment' focused_product.id %}" method="POST">
+        {% csrf_token %}
+        <textarea style="height:100px;width:300px" type="text" placeholder="Comment" name="new_comment"></textarea>
+        <button class="button" style="
+                    padding: 15px 25px;
+                    font-size: 14px;
+                    text-align: center;
+                    cursor: pointer;
+                    outline: none;
+                    color: #fff;
+                    background-color: #2596be;
+                    border: none;
+                    border-radius: 15px;">
+                Comment</button>
+    </form>
+<br>
+
+
+<hr>
+
+{% for biid in bid %}
+{%if biid.bid == focused_product.price %}
+    {%if current_user == biid.user %}
+    <form action="{% url 'closebid' focused_product.id %}" method="POST">
+                    {% csrf_token %}
+                    <button class="button" style="
+                                padding: 15px 25px;
+                                font-size: 14px;
+                                text-align: center;
+                                cursor: pointer;
+                                outline: none;
+                                color: #fff;
+                                background-color: #2596be;
+                                border: none;
+                                border-radius: 15px;">closed listing.</button>
+    </form>
+    {%endif%}
+{%endif%}
+{%endfor%}
+<hr style="border:0.5px solid grey">
+<!--    <button type="button" class="btn btn-primary btn-lg btn-block">Comments</button>-->
+    <h2>Comment Section</h2>
+    {% if not comment %}
+            <h4>No comments at this moment.</h4>
+    {% else %}
+{% for new in comment%}
+        User: {{new.user}}
+        <br>
+        Comment: {{new.comment}}
+        <br>
+        Date: {{new.date}}
+        <hr>
+{% endfor %}
+        <br>
+    {% endif %}
+
+{% endblock %}-->

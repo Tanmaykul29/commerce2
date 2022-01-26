@@ -1,0 +1,27 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Category</h2>
+        <hr>
+    {% if not filtered_cat %}
+            <h3>No auctions at this moment.</h3>
+    {% endif %}
+    {% for cat in filtered_cat %}
+
+<!--        All listings -->
+        <b><h2>{{cat.title.capitalize}}</h2></b>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-6" style="background-color:#4FBDBA;"><img src="{{cat.img_url}}" style="width=300px;height:300px"></div>
+            <div class="col-sm-6" style="background-color:#AEFEFF;">
+                <p>{{cat.description}}</p>
+                <p>{{cat.category}}</p>
+                <p>{{cat.price}}</p>
+                <p>{{cat.date}}</p>
+            </div>
+          </div>
+        </div>
+        <hr style="border:0.5px solid grey">
+    {% endfor %}
+
+{% endblock %}

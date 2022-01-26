@@ -1,0 +1,34 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Create Listings</h2>
+    <form action="{% url 'create' %}" method="POST">
+        {% csrf_token %}
+<!--        {{form.as_p}}-->
+        {% for field in form %}
+
+        <div class="form-group">
+            <label class="col-sm-12 control-label" for="{{ field.name }}">{{ field.label }} : </label>
+
+            <div class="col-sm-12">
+                {{ field }}
+            </div>
+        </div>
+
+        {% endfor %}
+    <br>
+        <button class="button" style="
+                    margin-top:15px;
+                    margin-left:20px;
+                    padding: 15px 25px;
+                    font-size: 14px;
+                    text-align: center;
+                    cursor: pointer;
+                    outline: none;
+                    color: #fff;
+                    background-color: #2596be;
+                    border: none;
+                    border-radius: 15px;">
+                Add</button>
+    </form>
+{% endblock %}
